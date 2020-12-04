@@ -18,7 +18,7 @@ class Timer extends React.Component {
     pause = () => {
         clearInterval(this.myInterval);
     };
-
+    //err
     reset = () => {
         clearInterval(this.myInterval);
         this.setState({
