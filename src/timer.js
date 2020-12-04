@@ -8,6 +8,7 @@ class Timer extends React.Component {
         this.state = {
             minutes: 0,
             count: 0,
+            visible: true,
             date: new Date().toLocaleString()
         }
         this.pause.bind(this)
@@ -23,7 +24,8 @@ class Timer extends React.Component {
         clearInterval(this.myInterval);
         this.setState({
             count: 0,
-            minutes:0
+            minutes: 0,
+            visible: true
         })
     };
 
@@ -33,14 +35,14 @@ class Timer extends React.Component {
                 count: this.state.count - 1,
             })
             if (this.state.count < 0)
-            this.setState({
-                minutes: this.state.minutes - 1,
-                count: 59
-            })
+                this.setState({
+                    minutes: this.state.minutes - 1,
+                    count: 59
+                })
             if (this.state.count === 0 && this.state.minutes === 0)
-            clearInterval(this.myInterval);
+                clearInterval(this.myInterval)
         }, 1000);
-
+        this.setState({visible: false})
     }
 
     increment = (X) => {
@@ -60,19 +62,27 @@ class Timer extends React.Component {
     render() {
         return (
             <div>
-                <ArrowBackIosIcon onClick={() => this.decrement('m')} />
+                {this.state.visible ? <ArrowBackIosIcon onClick={() => this.decrement('m')} />
+                    : null}
+                {/* <ArrowBackIosIcon onClick={() => this.decrement('m')} /> */}
                 <span>
                     {this.state.minutes >= 10 ?
                         this.state.minutes : "0" + this.state.minutes}
                 </span>
-                <ArrowForwardIosIcon onClick={() => this.increment('m')} />
+                {this.state.visible ? <ArrowForwardIosIcon onClick={() => this.increment('m')} />
+                    : null}
+                {/* <ArrowForwardIosIcon onClick={() => this.increment('m')} /> */}
                 <strong> : </strong>
-                <ArrowBackIosIcon onClick={() => this.decrement('c')} />
+                {this.state.visible ? <ArrowBackIosIcon onClick={() => this.decrement('c')} />
+                    : null}
+                {/* <ArrowBackIosIcon onClick={() => this.decrement('c')} /> */}
                 <span>
                     {this.state.count >= 10 ?
                         this.state.count : "0" + this.state.count}
                 </span>
-                <ArrowForwardIosIcon onClick={() => this.increment('c')} />
+                {this.state.visible ? <ArrowForwardIosIcon onClick={() => this.increment('c')} />
+                    : null}
+                {/* <ArrowForwardIosIcon onClick={() => this.increment('c')} /> */}
                 <br />
                 <button onClick={this.start}>Start</button>
                 <button onClick={this.pause}>Pause</button>
