@@ -9,6 +9,7 @@ class Timer extends React.Component {
             minutes: 0,
             count: 0,
             visible: true,
+            visible2: true,
             date: new Date().toLocaleString()
         }
         this.pause.bind(this)
@@ -18,6 +19,7 @@ class Timer extends React.Component {
 
     pause = () => {
         clearInterval(this.myInterval);
+        this.setState({visible2:true})
     };
 
     reset = () => {
@@ -25,7 +27,8 @@ class Timer extends React.Component {
         this.setState({
             count: 0,
             minutes: 0,
-            visible: true
+            visible: true,
+            visible2:true
         })
     };
 
@@ -42,7 +45,7 @@ class Timer extends React.Component {
             if (this.state.count === 0 && this.state.minutes === 0)
                 clearInterval(this.myInterval)
         }, 1000);
-        this.setState({visible: false})
+        this.setState({ visible: false,visible2:false })
     }
 
     increment = (X) => {
@@ -53,9 +56,9 @@ class Timer extends React.Component {
     }
 
     decrement = (X) => {
-        if (X === 'm' && this.state.minutes < 59)
+        if (X === 'm' && this.state.minutes >0)
             this.setState({ minutes: this.state.minutes - 1 });
-        else if (X === 'c' && this.state.count < 59)
+        else if (X === 'c' && this.state.count >0)
             this.setState({ count: this.state.count - 1 });
     }
 
@@ -84,8 +87,12 @@ class Timer extends React.Component {
                     : null}
                 {/* <ArrowForwardIosIcon onClick={() => this.increment('c')} /> */}
                 <br />
-                <button onClick={this.start}>Start</button>
-                <button onClick={this.pause}>Pause</button>
+                {this.state.visible2 ? <button onClick={this.start}>Start</button>
+                    : null}
+                {/* <button onClick={this.start}>Start< /button> */}
+                {this.state.visible2 ? null : <button onClick={this.pause}>Pause</button>
+                }
+                {/* <button onClick={this.pause}>Pause</button> */}
                 <button onClick={this.reset}>Reset</button>
                 <br />
                 <span>{this.state.date}</span>
