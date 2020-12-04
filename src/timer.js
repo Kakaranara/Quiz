@@ -16,13 +16,13 @@ class Timer extends React.Component {
         this.start.bind(this)
         this.reset.bind(this)
     }
-
-    pause = () => {
+    
+    pause = () => { //pause Function
         clearInterval(this.myInterval);
         this.setState({visible2:true})
     };
 
-    reset = () => {
+    reset = () => { //reset
         clearInterval(this.myInterval);
         this.setState({
             count: 0,
