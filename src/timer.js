@@ -18,20 +18,29 @@ class Timer extends React.Component {
     pause = () => {
         clearInterval(this.myInterval);
     };
-    //err
+
     reset = () => {
         clearInterval(this.myInterval);
         this.setState({
-            count: 0
+            count: 0,
+            minutes:0
         })
     };
 
     start = () => {
         this.myInterval = setInterval(() => {
-            this.setState(prevState => ({
-                count: prevState.count - 1,
-        }))
+            this.setState({
+                count: this.state.count - 1,
+            })
+            if (this.state.count < 0)
+            this.setState({
+                minutes: this.state.minutes - 1,
+                count: 59
+            })
+            if (this.state.count === 0 && this.state.minutes === 0)
+            clearInterval(this.myInterval);
         }, 1000);
+
     }
 
     increment = (X) => {
@@ -54,14 +63,14 @@ class Timer extends React.Component {
                 <ArrowBackIosIcon onClick={() => this.decrement('m')} />
                 <span>
                     {this.state.minutes >= 10 ?
-                    this.state.minutes : "0" + this.state.minutes}
+                        this.state.minutes : "0" + this.state.minutes}
                 </span>
                 <ArrowForwardIosIcon onClick={() => this.increment('m')} />
                 <strong> : </strong>
                 <ArrowBackIosIcon onClick={() => this.decrement('c')} />
                 <span>
                     {this.state.count >= 10 ?
-                    this.state.count : "0" + this.state.count}
+                        this.state.count : "0" + this.state.count}
                 </span>
                 <ArrowForwardIosIcon onClick={() => this.increment('c')} />
                 <br />
